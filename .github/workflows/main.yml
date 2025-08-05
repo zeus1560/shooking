@@ -17,17 +17,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+          cache: 'npm' # ✅ 캐시로 빌드 시간 단축
+          cache-dependency-path: ./react-app/package-lock.json
 
       - name: Install dependencies
         run: npm install
-        working-directory: ./
+        working-directory: ./react-app
 
       - name: Build React app
         run: npm run build
-        working-directory: ./
+        working-directory: ./react-app
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./react-app/build
